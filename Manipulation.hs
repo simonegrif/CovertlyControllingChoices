@@ -91,12 +91,9 @@ updateBallotSet ballots i vote =
   filter (\x -> x !! i == vote) ballots
 
 getAgent, getIss, getVote :: IO String
-getAgent = do putStr "\nAgent :\n"
-              getLine
-getIss = do putStr "\nIssue :\n"
-            getLine
-getVote = do putStr "\nVote :\n"
-             getLine
+getAgent = get "\nAgent :\n"
+getIss = get "\nIssue :\n"
+getVote = get "\nVote :\n"
 
 typeErr :: String
 typeErr = "\nIncorrect type for input, try again\n"
@@ -206,10 +203,8 @@ updateKnowledgePA v a (i,j) =
   updateKnowledge (v * v) a (alt2iss (i,j) v)
 
 getAlts :: IO (String,String)
-getAlts = do putStr "\nPrefers a over b. What is a?\n"
-             a <- getLine
-             putStr "\n What is b? \n"
-             b <- getLine
+getAlts = do a <- get "\nPrefers a over b. What is a?\n"
+             b <- get "\n What is b? \n"
              return (a,b)
 
 checkIndicesAlts :: (Alternative,Alternative,Int) -> String
@@ -392,4 +387,3 @@ bestAgendasDB m ag' bc ui kn = let
           (restrictIC ag m bc) (dbOnAg ag)
   in
     maximaBy (comparing f) ags
-

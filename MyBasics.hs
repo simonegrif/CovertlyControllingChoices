@@ -28,7 +28,7 @@ groupOrder :: (a -> a -> Ordering) -> [a] ->
               ([a] -> [a] -> Ordering, [[a]])
 groupOrder f xs = let
   g a b = f a b == EQ
-  grouped = groupBy g xs
+  grouped = groupBy g (sortBy f xs)
   h ys1 ys2 = f (head ys1) (head ys2)
   in (h, grouped)
 
@@ -42,3 +42,6 @@ maximaBy f xs = let
     (h, grouped) = groupOrder f xs
   in maximumBy h grouped
 
+get :: String -> IO String
+get str = do putStr str
+             getLine
